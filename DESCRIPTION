@@ -1,20 +1,25 @@
 Package: rfextras
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Extra Functionalities for reportfactory
 Version: 0.0.1
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: c(
+  person("Thibaut", "Jombart", role = c("aut"), email = "thibautjombart@gmail.com"), 
+  person("Tim", "Taylor", role =c("aut", "cre"), email = "tim.taylor@hiddenelephants.co.uk",
+         comment = c(ORCID = "0000-0002-8587-7113"))
+ )
+Description: Provides additional functionalities to work with the reportfactory.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
     testthat,
-    covr
+    covr,
+    fs
 Imports: 
     reportfactory
 URL: https://github.com/reconhub/rfextras
 BugReports: https://github.com/reconhub/rfextras/issues
 Remotes: reconhub/reportfactory
 RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3

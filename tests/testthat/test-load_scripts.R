@@ -1,4 +1,5 @@
 library(reportfactory)
+library(fs)
 
 test_that("load_scripts works when files exist", {
 
@@ -14,6 +15,9 @@ test_that("load_scripts works when files exist", {
 })
 
 
+
+
+
 test_that("messages and errors as expected", {
 
   # create factory
@@ -21,4 +25,5 @@ test_that("messages and errors as expected", {
   on.exit(unlink(f, recursive = TRUE))
   expect_message(load_scripts(f), "No `.R` files in")
   expect_error(load_scripts(f, "bob"), "does not exist")
+
 })
