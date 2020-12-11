@@ -16,7 +16,8 @@ Suggests:
     covr,
     fs
 Imports: 
-    reportfactory
+    reportfactory,
+    lubridate
 URL: https://github.com/reconhub/rfextras
 BugReports: https://github.com/reconhub/rfextras/issues
 Remotes: reconhub/reportfactory

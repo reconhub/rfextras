@@ -1,0 +1,44 @@
+library(reportfactory)
+library(fs)
+
+
+test_that("find_latest gives expected results", {
+
+  skip_on_cran()
+
+  ## create new factory and toy files
+  odir <- getwd()
+  f <- new_factory(path = path_temp())
+  on.exit(dir_delete(f))
+
+  file.create(file.path("data", "linelist_2020-10-01.xlsx"))
+  file.create(file.path("data", "linelist_2020-10-12.csv"))
+  file.create(file.path("data", "linelist.xlsx"))
+  file.create(file.path("data", "contacts.xlsx"))
+  file.create(file.path("data", "death_linelist_2020-10-13.xlsx"))
+  cat("This is a test\n", file = file.path("data", "notes_2020-01-01.txt"))
+
+  ## test a few paths
+  expect_identical("/data/death_linelist_2020-10-13.xlsx",
+                   sub(getwd(), "", find_latest("linelist")))
+  expect_identical("/data/linelist_2020-10-12.csv",
+                   sub(getwd(), "", find_latest("^linelist")))
+  expect_identical(NULL,
+                  find_latest("yakossomak", quiet = TRUE))
+
+  ## test that we can actually read the file
+  expected <- "This is a test"
+  actual <- readLines(find_latest("notes", quiet = TRUE))
+  expect_identical(expected, actual)
+
+  ## test expected errors / messages
+  msg <- "Some files matching requested pattern have no 'yyyy-mm-dd' date"
+  expect_message(find_latest("linelist"), msg)
+
+  msg <- "No file matching pattern 'foobar' found in"
+  expect_message(find_latest("foobar"),
+                 msg)
+
+  setwd(odir)
+
+})
