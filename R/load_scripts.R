@@ -12,7 +12,7 @@
 #'   console (`TRUE`, default), or not.
 #'
 #' @export
-rfh_load_scripts <- function(factory = ".", folder = "scripts", quiet = FALSE) {
+load_scripts <- function(factory = ".", folder = "scripts", quiet = FALSE) {
 
   ## Approach: we list all .R files in the specified folder, and load all of
   ## them in alphanumeric order; we need to make sure all objects are loaded in
