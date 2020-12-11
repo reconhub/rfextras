@@ -44,3 +44,7 @@ vignettes/*.pdf
 # pkgdown site
 docs/
 docs
+
+# other stuff
+README.html
+*~

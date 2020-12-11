@@ -1,0 +1,74 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r readmesetup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/reconhub/rfextras/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/rfextras/actions)
+[![Codecov test coverage](https://codecov.io/gh/reconhub/rfextras/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/rfextras?branch=master)
+[![R build status](https://github.com/reconhub/rfextras/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/rfextras/actions)
+<!-- badges: end -->
+
+
+
+
+# Welcome to *rfextras*!
+
+*rfextras* stands for *reportfactory extras*. As its name suggests, it provides
+extensions for the [{reportfactory}](https://github.com/reconhub/reportfactory),
+a package providing a simple infrastructure for handling multiple *rmarkdown*
+documents. Unlike the *reportfactory* which is relatively agnostic in terms of
+workflows, these extensions tend to implement more opinionated tools, which may
+be useful only for some users.
+
+
+## Installing the package
+
+To install the development version of the package, use:
+
+```{r install2, eval = FALSE}
+remotes::install_github("reconhub/rfextras")
+```
+
+
+## Overview
+
+{rfextras} provides several features, broken down in functions meant to be used
+within reports, or outside.
+
+### Features to be used inside reports
+
+Here is a quick list of features provided by {rfextras}, to be used inside
+`.Rmd` documents.
+
+* `load_scripts()`: safely loads all `.R` files in a given folder (defaulting to
+  `scripts/`)
+
+* `find_latest()`: find the latest version of a file, when several dated versions
+  exist (e.g. find the latest dataset)
+
+
+
+
+
+## Contributing guidelines
+
+Contributions are welcome via **pull requests**.
+
+
+### Code of Conduct
+
+Please note that the reportfactory project is released with a 
+[Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
