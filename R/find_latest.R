@@ -80,11 +80,6 @@ find_latest <- function(pattern,
                         quiet = FALSE,
                         ...) {
 
-  if (!inherits(date_parser, "function")) {
-    msg <- "`date_parser` is not a function"
-    stop(msg)
-  }
-
   # Approach
   #
   # 1. check the directory provided as 'where' and make sure it exists

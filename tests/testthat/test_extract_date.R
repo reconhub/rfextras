@@ -21,3 +21,16 @@ test_that("extract_date gives expected results", {
   expect_equal(expected, actual)
 
 })
+
+
+
+
+
+# Test messages, warnings and errors
+test_that("extract_date gives expected messages/warnings/errors", {
+
+  msg <- "`date_parser` is not a function"
+  expect_error(extract_date("", "toto"),
+               msg)
+  
+})

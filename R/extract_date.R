@@ -25,6 +25,12 @@
 #'
 
 extract_date <- function(x, date_parser = lubridate::ymd) {
+  
+  if (!inherits(date_parser, "function")) {
+    msg <- "`date_parser` is not a function"
+    stop(msg)
+  }
+
   date_pattern <- "[0-9]{1,4}[-_/ .]?[0-9]{1,2}[-_/ .]?[0-9]{1,4}"
   date_txt <- extract_string(x, date_pattern)
   date_parser(date_txt)
