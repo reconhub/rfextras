@@ -74,11 +74,11 @@ load_scripts <- function(factory = ".", folder = "scripts", quiet = FALSE) {
 
   if (length(script_files)) {
     for (file in script_files) {
-      if (!quiet) {
-          msg <- sprintf("Loading %s\n", file)
-          message(msg)
-      }
-      sys.source(file, envir = parent)
+        if (!quiet) {
+            msg <- sprintf("Loading file: %s", file)
+            message(msg)
+        }
+        sys.source(file, envir = parent)
     }
   } else {
       if (!quiet) {
