@@ -1,8 +1,7 @@
 
-context("Extract dates")
 
 # basic test with a single date
-test_that("The date is extracted from a signle string", {
+test_that("extract_date gives expected results", {
 
   ## ymd formats
   x <- c("contacts_2017-10-29",

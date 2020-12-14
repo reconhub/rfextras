@@ -22,7 +22,7 @@ test_that("messages and errors as expected", {
 
   # create factory
   f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
+  on.exit(dir_delete(f))
   expect_message(load_scripts(f), "No `.R` files in")
   expect_error(load_scripts(f, "bob"), "does not exist")
 
