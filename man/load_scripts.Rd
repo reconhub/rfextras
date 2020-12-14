@@ -21,3 +21,30 @@ This helper function will load all \code{.R} scripts within a specified factory
 and folder. All scripts are loaded within the calling environment and in
 alphanumeric order.
 }
+\examples{
+
+if (require(reportfactory)) {
+
+# create factory
+f <- new_factory(path = tempdir(), move_in = FALSE)
+
+# create .R files in scripts/
+
+## scripts are loaded in alphanumeric order, so "b.R" is loaded after "a.R" and
+## can use its content
+
+cat("addone <- function(x) x + 1", file = file.path(f, "scripts", "addone.R"))
+cat("a <- 2L", file = file.path(f, "scripts", "a.R"))
+cat("b <- 2L + a", file = file.path(f, "scripts", "b.R"))
+
+## load scripts, check that 'a', 'b', and 'addone' exist
+load_scripts(f)
+a
+b
+addone(10)
+addone(c(a, b))
+
+# cleanup
+unlink(f, recursive = TRUE)
+}
+}

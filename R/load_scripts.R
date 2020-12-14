@@ -14,6 +14,34 @@
 #'   console (`TRUE`, default), or not.
 #'
 #' @export
+#'
+#' @examples
+#'
+#' if (require(reportfactory)) {
+#' 
+#' # create factory
+#' f <- new_factory(path = tempdir(), move_in = FALSE)
+#' 
+#' # create .R files in scripts/
+#' 
+#' ## scripts are loaded in alphanumeric order, so "b.R" is loaded after "a.R" and
+#' ## can use its content
+#' 
+#' cat("addone <- function(x) x + 1", file = file.path(f, "scripts", "addone.R"))
+#' cat("a <- 2L", file = file.path(f, "scripts", "a.R"))
+#' cat("b <- 2L + a", file = file.path(f, "scripts", "b.R"))
+#'
+#' ## load scripts, check that 'a', 'b', and 'addone' exist
+#' load_scripts(f)
+#' a
+#' b
+#' addone(10)
+#' addone(c(a, b))
+#' 
+#' # cleanup
+#' unlink(f, recursive = TRUE)
+#' }
+
 load_scripts <- function(factory = ".", folder = "scripts", quiet = FALSE) {
 
   ## Approach: we list all .R files in the specified folder, and load all of
@@ -34,10 +62,10 @@ load_scripts <- function(factory = ".", folder = "scripts", quiet = FALSE) {
   ## get parent environment
   parent <- parent.frame()
 
-  ## process .R files in scripts/
+  ## process .R files in the scripts folder
   script_files <- list.files(
     scripts_dir,
-    pattern = "\\.R$",
+    pattern = "\\.[rR]$",
     recursive = TRUE,
     full.names = TRUE
   )
@@ -47,12 +75,15 @@ load_scripts <- function(factory = ".", folder = "scripts", quiet = FALSE) {
   if (length(script_files)) {
     for (file in script_files) {
       if (!quiet) {
-        msg <- sprintf("Loading %s\n", file)
+          msg <- sprintf("Loading %s\n", file)
+          message(msg)
       }
       sys.source(file, envir = parent)
     }
   } else {
-    message("No `.R` files in %s", scripts_dir)
+      if (!quiet) {
+          message("No `.R` files in %s", scripts_dir)
+      }
   }
 
   ## nothing to return, bye everyone
