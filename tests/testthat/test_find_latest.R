@@ -9,8 +9,8 @@ test_that("find_latest gives expected results", {
   ## create new factory and toy files
   odir <- getwd()
   f <- new_factory(path = path_temp())
-  ## on.exit(dir_delete(f))
-  ## on.exit(setwd(odir))
+  on.exit(dir_delete(f))
+  on.exit(setwd(odir), add = TRUE)
 
   file.create(file.path("data", "linelist_2020-10-01.xlsx"))
   file.create(file.path("data", "linelist_2020-10-12.csv"))
@@ -34,11 +34,6 @@ test_that("find_latest gives expected results", {
   actual <- readLines(find_latest("notes", quiet = TRUE))
   expect_identical(expected, actual)
 
-
-  ## because on.exit() is not working...
-  dir_delete(f)
-  setwd(odir)
-
 })
 
 
@@ -52,8 +47,8 @@ test_that("find_latest gives expected messages, warnings and errors", {
   ## create new factory and toy files
   odir <- getwd()
   f <- new_factory(path = path_temp())
-  ## on.exit(dir_delete(f))
-  ## on.exit(setwd(odir))
+  on.exit(dir_delete(f))
+  on.exit(setwd(odir), add = TRUE)
 
   file.create(file.path("data", "linelist_2020-10-01.xlsx"))
   file.create(file.path("data", "linelist_2020-10-12.csv"))
@@ -81,10 +76,6 @@ test_that("find_latest gives expected messages, warnings and errors", {
                  getwd())
   expect_message(find_latest("yakossomak", quiet = FALSE),
                  msg)
-
-  ## because on.exit() is not working...
-  dir_delete(f)
-  setwd(odir)
 
 })
 
