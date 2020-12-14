@@ -9,8 +9,9 @@ test_that("find_latest gives expected results", {
   ## create new factory and toy files
   odir <- getwd()
   f <- new_factory(path = path_temp())
-  on.exit(dir_delete(f))
-  on.exit(setwd(odir), add = TRUE)
+  on.exit(setwd(odir))
+  on.exit(dir_delete(f), add = TRUE)
+  
 
   file.create(file.path("data", "linelist_2020-10-01.xlsx"))
   file.create(file.path("data", "linelist_2020-10-12.csv"))
@@ -47,8 +48,8 @@ test_that("find_latest gives expected messages, warnings and errors", {
   ## create new factory and toy files
   odir <- getwd()
   f <- new_factory(path = path_temp())
-  on.exit(dir_delete(f))
-  on.exit(setwd(odir), add = TRUE)
+  on.exit(setwd(odir))
+  on.exit(dir_delete(f), add = TRUE)
 
   file.create(file.path("data", "linelist_2020-10-01.xlsx"))
   file.create(file.path("data", "linelist_2020-10-12.csv"))
