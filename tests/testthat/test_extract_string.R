@@ -14,7 +14,7 @@ test_that("extract_string returned expected results", {
 test_that("extract_string returns the correct class", {
   x <- "I love RECON"
   pattern <- "[A-Z]{5}"
-  expect_that(extract_string(x, pattern), is_a("character"))
+  expect_type(extract_string(x, pattern), "character")
 })
 
 
