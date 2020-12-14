@@ -67,7 +67,7 @@ test_that("find_latest gives expected messages, warnings and errors", {
   foobar <- lubridate::ymd
   msg <- "foobar could not find dates in files matching linelist"
   expect_message(find_latest("linelist",
-                             date_converter = foobar,
+                             date_parser = foobar,
                              quiet =  FALSE),
                  msg)
 

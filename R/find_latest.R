@@ -1,18 +1,24 @@
 #' Find latest version of a file
 #'
-#' This function will scan recursively a directory, looking for files of a given
-#' name (or matching a given regular expression). Files need to include a date
-#' in a common format (detected automatically). The full path to the most recent
-#' file will be returned.
+#' If some file names include dates, this function will find the latest version
+#' of a given file. This can be handy e.g. for finding the latest data update
+#' automatically. `find_latest` scans recursively a directory, looking for file
+#' names matching a given pattern (or regular expression) and including
+#' dates. Dates are extracted using [extract_date](extract_date), using a
+#' user-provided parser (see details). The full path to the most recent file
+#' will be returned.
 #'
 #' @author Thibaut Jombart
 #'
-#' @param pattern a character string indicating the name of the file to look for (or
-#'   regular expression)
+#' @export
+#' 
+#' @param pattern a character string indicating the name of the file to look for, or
+#'   regular expression to be matched against file names
 #'
-#' @param where the directory in which to look for the file
+#' @param where the directory in which to look for the file; defaults to the
+#'     current directory
 #'
-#' @param date_converter a function to extract dates from character strings; we
+#' @param date_parser a function to extract dates from character strings; we
 #'   recommend using `lubridate`'s function there, e.g. `ymd` (any date format
 #'   with year, month, day) or `dmy` (any format using day, month, year);
 #'   defaults to `lubridate::ymd`
@@ -22,10 +28,30 @@
 #'
 #' @param ... further arguments passed to [`list.files`](list.files)
 #'
+#' @details The date parser used by default is [lubridate::ymd](lubridate::ymd),
+#'     so that any date specified as year/month/day (regardless of the separator
+#'     used) should work. One exception is that only dates provided as numbers
+#'     can be used e.g. "1982.02.04" and "82/2/4" are okay but not
+#'     "1982 Feb 04". For dates provided in a different order, check other
+#'     parsers implemented in `lubridate`, e.g. `lubridate::dmy` for
+#'     day-month-year formats, or `lubridate::ydm` for year-day-month. Note that
+#'     parsers for date-time objects can also be used, but in any case a `Date`
+#'     object will be returned.
+#'
+#' @seealso [extract_date](extract_date) to extract dates from `character`
+#'     strings; see the `lubridate` [website](https://lubridate.tidyverse.org/)
+#'     and
+#'     [cheatsheet](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf)
+#'     for other parsers
+#'
+#' @examples  
+#'
+#' if (require(reportfactory)) {
+#' 
 #' ## create random factory and toy files
 #' odir <- getwd()
-#' random_factory(tempdir())
-
+#' f <- new_factory(path = tempdir())
+#' 
 #' file.create(file.path("data", "linelist_2020-10-01.xlsx"))
 #' file.create(file.path("data", "linelist_2020-10-12.csv"))
 #' file.create(file.path("data", "linelist.xlsx"))
@@ -34,25 +60,28 @@
 #'
 #' ## find the latest data with 'linelist' in the name; note that this
 #' ## matches both 'linelist' and 'death_linelist' files
-#' rfh_find_latest("linelist")
+#' find_latest("linelist")
 #'
 #' ## same, but this time files starting with 'linelist', i.e. excluding
 #' ## 'death_linelist'
-#' rfh_find_latest("^linelist")
+#' find_latest("^linelist")
 #'
 #' ## this returns NULL
-#' rfh_find_latest("foobar")
+#' find_latest("foobar")
 #'
+#' ## cleanup
+#' unlink(f, recursive = TRUE)
 #' setwd(odir)
+#' }
 
 find_latest <- function(pattern,
                         where = getwd(),
-                        date_converter = lubridate::ymd,
+                        date_parser = lubridate::ymd,
                         quiet = FALSE,
                         ...) {
 
-  if (!inherits(date_converter, "function")) {
-    msg <- "`date_converter` is not a function"
+  if (!inherits(date_parser, "function")) {
+    msg <- "`date_parser` is not a function"
     stop(msg)
   }
 
@@ -95,12 +124,12 @@ find_latest <- function(pattern,
   # step 3: get dates; note that there could be multiple dates in the full path
   # to a file, and only the one in the basename is used
   base_files <- basename(all_files)
-  file_dates <- extract_date(base_files, date_converter)
+  file_dates <- extract_date(base_files, date_parser)
 
   if (any(is.na(file_dates)) && !quiet) {
     msg <- sprintf(
       "%s could not find dates in files matching %s",
-      deparse(substitute(date_converter)),
+      deparse(substitute(date_parser)),
       pattern)
     message(msg)
   }

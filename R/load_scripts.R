@@ -6,8 +6,10 @@
 #'
 #' @param factory The path to the report factory or a folder within the desired
 #'   factory. Defaults to the current directory.
+#' 
 #' @param folder The folder (relative to the factory) from which to source `.R`
 #'   files; defaults to `scripts/`.
+#' 
 #' @param quiet A logical indicating whether messages should be displayed to the
 #'   console (`TRUE`, default), or not.
 #'
