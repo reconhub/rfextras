@@ -6,8 +6,6 @@
 [![R-CMD-check](https://github.com/reconhub/rfextras/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/rfextras/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/reconhub/rfextras/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/rfextras?branch=master)
-[![R build
-status](https://github.com/reconhub/rfextras/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/rfextras/actions)
 <!-- badges: end -->
 
 # Welcome to *rfextras*\!
