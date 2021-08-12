@@ -20,7 +20,6 @@ Imports:
     lubridate
 URL: https://github.com/reconhub/rfextras
 BugReports: https://github.com/reconhub/rfextras/issues
-Remotes: reconhub/reportfactory
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
